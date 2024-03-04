@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Mode Search</title>
+    <style>
+      /* Dark mode styles */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #222;
+        color: #fff;
+      }
+
+      /* Container for the header and content */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      /* Header styles */
+      header {
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      header h1 {
+        font-size: 24px;
+        margin: 0;
+      }
+
+      /* Time display */
+      #time {
+        font-size: 18px;
+      }
+
+      /* Social media icons */
+      .social-icons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+
+      .social-icon {
+        margin: 10px;
+      }
+
+      .social-icon img {
+        width: 80px;
+        height: 80px;
+        border-radius: 8px;
+      }
+
+      .label {
+        font-size: 14px;
+        text-align: center;
+      }
+
+      /* Web Search */
+      #search-container {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      #search-input,
+      #search-btn,
+      #search-engine {
+        margin: 5px;
+        padding: 15px;
+        border-radius: 20px;
+        border: none;
+        font-size: 16px;
+        outline: none;
+      }
+
+      #search-btn {
+        background-color: #4285f4;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        padding: 20px;
+      }
+
+      #search-btn:hover {
+        background-color: #357ae8;
+      }
+
+      #search-input {
+        width: 300px;
+      }
+
+      #search-engine {
+        padding: 15px;
+        background-color: #333;
+        color: #fff;
+      }
+
+      .error-message {
+        color: red;
+        margin-top: 10px;
+      }
+
+      /* Centering "Dark Mode Search" text for mobile */
+      @media only screen and (max-width: 1080px) {
+        header h1 {
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header>
+        <h1>Dark Mode Search</h1>
+        <div id="time"></div>
+      </header>
+      <!-- Social media icons -->
+      <div class="social-icons">
+        <div class="social-icon">
+          <a href="https://www.youtube.com">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/YouTube_social_red_circle_%282017%29.svg/1200px-YouTube_social_red_circle_%282017%29.svg.png" alt="YouTube">
+            <div class="label">YouTube</div>
+          </a>
+        </div>
+        <div class="social-icon">
+          <a href="https://www.tiktok.com">
+            <img src="https://static.vecteezy.com/system/resources/previews/006/057/996/non_2x/tiktok-logo-on-transparent-background-free-vector.jpg" alt="TikTok">
+            <div class="label">TikTok</div>
+          </a>
+        </div>
+        <div class="social-icon">
+          <a href="https://www.instagram.com">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/600px-Instagram_icon.png" alt="Instagram">
+            <div class="label">Instagram</div>
+          </a>
+        </div>
+        <div class="social-icon">
+          <a href="https://www.wikipedia.org">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Wikipedia-logo_ka.png" alt="Wikipedia">
+            <div class="label">Wikipedia</div>
+          </a>
+        </div>
+        <!-- Add more social media icons here -->
+      </div>
+      <!-- Web Search -->
+      <div id="search-container">
+        <input type="text" id="search-input" placeholder="Enter your search query..." aria-label="Search query">
+        <button id="search-btn" onclick="search()" aria-label="Search">Search</button>
+        <select id="search-engine" aria-label="Search Engine">
+          <option value="google">Google</option>
+          <option value="bing">Bing</option>
+          <option value="yahoo">Yahoo</option>
+          <option value="duckduckgo">DuckDuckGo</option>
+          <option value="ask">Ask.com</option>
+        </select>
+        <div id="error-message" class="error-message" style="display: none;">Please enter a search query.</div>
+      </div>
+    </div>
+    <script>
+      // Display current time
+      function updateTime() {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var seconds = now.getSeconds();
+        // Add leading zeros if needed
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+        var timeString = hours + ":" + minutes + ":" + seconds;
+        document.getElementById('time').textContent = timeString;
+      }
+      // Update time every second
+      setInterval(updateTime, 1000);
+      // Search function
+      function search() {
+        var query = document.getElementById('search-input').value.trim();
+        if (query === "") {
+          document.getElementById('error-message').style.display = "block";
+          return;
+        }
+        var engine = document.getElementById('search-engine').value;
+        var searchUrl;
+        switch (engine) {
+          case 'bing':
+            searchUrl = 'https://www.bing.com/search?q=' + encodeURIComponent(query);
+            break;
+          case 'yahoo':
+            searchUrl = 'https://search.yahoo.com/search?p=' + encodeURIComponent(query);
+            break;
+          case 'duckduckgo':
+            searchUrl = 'https://duckduckgo.com/?q=' + encodeURIComponent(query);
+            break;
+          case 'ask':
+            searchUrl = 'https://www.ask.com/web?q=' + encodeURIComponent(query);
+            break;
+          default:
+            searchUrl = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+            break;
+        }
+        window.open(searchUrl, '_blank');
+      }
+    </script>
+  </body>
+</html>
